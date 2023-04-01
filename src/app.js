@@ -1,18 +1,57 @@
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+
 import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
+import multer from "multer";
+import { v4 as uuidv4 } from "uuid";
 
 import droneRoute from "./routes/drone.js";
+import medicationRoute from "./routes/medication.js";
 
 const MONGODB_URI = "mongodb://localhost:27017/droneManagement";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
+
+// Configure multer for file upload
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "src/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, uuidv4() + "." + file.mimetype.split("/")[1]);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
 
 // For encode json req
 app.use(bodyParser.json());
 
+// Register multer
+app.use(
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
+);
+
+// Statically serve images folder
+app.use("/images", express.static(path.join(__dirname, "images")));
+
 //Routes
 app.use("/drone", droneRoute);
+app.use("/medication", medicationRoute);
 
 //Error Handling
 app.use((error, req, res, next) => {
