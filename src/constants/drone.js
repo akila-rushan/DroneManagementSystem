@@ -4,3 +4,12 @@ export const droneModel = [
   "CRUISER_WEIGHT",
   "HEAVY_WEIGHT",
 ];
+
+export const droneState = [
+  "IDLE",
+  "LOADING",
+  "LOADED",
+  "DELIVERING",
+  "DELIVERED",
+  "RETURNING",
+];

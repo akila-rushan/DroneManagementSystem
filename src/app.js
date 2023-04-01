@@ -14,6 +14,21 @@ app.use(bodyParser.json());
 //Routes
 app.use("/drone", droneRoute);
 
+//Error Handling
+app.use((error, req, res, next) => {
+  console.log(error);
+  const [statusCode, message, data] = [
+    error.statusCode,
+    error.message,
+    error.data,
+  ];
+  res.status(statusCode).json({
+    statusCode,
+    message,
+    data,
+  });
+});
+
 // Connect to database
 mongoose
   .connect(MONGODB_URI, {
