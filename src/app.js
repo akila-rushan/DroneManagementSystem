@@ -53,7 +53,7 @@ app.use(
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 // Log battery level every 1 min
-cron.schedule("* *1 * * * *", function () {
+cron.schedule("* */1 * * * *", function () {
   updateBatteryLevelLog();
 });
 
