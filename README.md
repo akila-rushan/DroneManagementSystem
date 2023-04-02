@@ -28,3 +28,7 @@ In terminal run following command to start the application
 ```bash
 $ npm start
 ```
+
+## Use attached postman collection to access the application
+
+[Collection](./Drone Management System.postman_collection.json).
