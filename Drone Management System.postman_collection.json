@@ -1,0 +1,287 @@
+{
+	"info": {
+		"_postman_id": "2de38e3c-957e-4fc3-9e09-37b8d78055c0",
+		"name": "Drone Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17587527"
+	},
+	"item": [
+		{
+			"name": "Drones",
+			"item": [
+				{
+					"name": "Get Drone List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/drone",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"drone"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Drone Details by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/drone/64296fecfc08050e574dcd3f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"drone",
+								"64296fecfc08050e574dcd3f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Drone Battery Level",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/drone/64296fecfc08050e574dcd3f?bLevel=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"drone",
+								"64296fecfc08050e574dcd3f"
+							],
+							"query": [
+								{
+									"key": "bLevel",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Available Drones for loading",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/drone/available",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"drone",
+								"available"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add new Drone",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"serialNumber\": \"1a25452a1\",\r\n    \"model\": \"HEAVY_WEIGHT\",\r\n    \"weightLimit\": 500,\r\n    \"batteryLevel\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/drone",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"drone"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Drone",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"serialNumber\": \"1a25452a1\",\r\n    \"model\": \"MIDDLE_WEIGHT\",\r\n    \"weightLimit\": 200,\r\n    \"batteryLevel\": \"100\",\r\n    \"state\": \"DELIVERED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/drone/64283ee794e7444d0f3a3dfe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"drone",
+								"64283ee794e7444d0f3a3dfe"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medication",
+			"item": [
+				{
+					"name": "Add new medication",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "1a25452a1-_",
+									"type": "text"
+								},
+								{
+									"key": "weight",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "AS015_",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Akila/Desktop/Project/NodeJs/DroneManagementSystem/src/images/52171699-6d21-4311-aaf4-d58c0ac752d3.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/medication",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"medication"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All medications",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:8080/medication",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"medication"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Load",
+			"item": [
+				{
+					"name": "Get loaded details for drone",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/load/details/64283ee794e7444d0f3a3dfe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"load",
+								"details",
+								"64283ee794e7444d0f3a3dfe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Load medication in to drone",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\": \"64283f4c94e7444d0f3a3e05\",\r\n    \"qty\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/load/64283ee794e7444d0f3a3dfe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"load",
+								"64283ee794e7444d0f3a3dfe"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
