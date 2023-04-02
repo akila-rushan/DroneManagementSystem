@@ -18,7 +18,7 @@ $ npm install
 In src/app.js file replace "mongodb://localhost:27017" part with your local mongodb connection string
 
 ```bash
-$ const MONGODB_URI = "mongodb://localhost:27017/droneManagement";
+$ const MONGODB_URI = "<Your MongoDB Connection String>/droneManagement";
 ```
 
 ## Run the application
