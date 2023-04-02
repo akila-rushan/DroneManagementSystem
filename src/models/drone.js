@@ -21,6 +21,25 @@ const droneSchema = new Schema({
     type: String,
     required: true,
   },
+  medications: {
+    items: [
+      {
+        medicationId: {
+          type: Schema.Types.ObjectId,
+          ref: "Medication",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+    totalWeight: {
+      type: Number,
+      required: true,
+    },
+  },
 });
 
 export default model("Drone", droneSchema);

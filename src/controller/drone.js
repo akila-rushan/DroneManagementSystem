@@ -2,6 +2,7 @@ import { validationResult } from "express-validator";
 
 import Drone from "../models/drone.js";
 import { generateErrorMessage } from "../utils/Error.js";
+import Battery from "../models/battery.js";
 
 // Get all the drones available
 export const getDrones = (req, res, next) => {
@@ -22,7 +23,6 @@ export const getDrones = (req, res, next) => {
 
 // Get available drones for loading
 export const getAvailableDrones = (req, res, next) => {
-  // TODO write logic
   Drone.find({ state: "IDLE", batteryLevel: { $gte: 25 } })
     .then((droneDetails) => {
       res.status(200).json({
@@ -90,6 +90,10 @@ export const registerDrone = (req, res, next) => {
     weightLimit,
     batteryLevel,
     state,
+    medications: {
+      items: [],
+      totalWeight: 0,
+    },
   });
 
   drone
@@ -135,6 +139,11 @@ export const updateDroneDetails = (req, res, next) => {
       droneDetails.batteryLevel = batteryLevel;
       droneDetails.state = state;
 
+      if (state === "DELIVERED" || state === "RETURNING") {
+        droneDetails.medications.items = [];
+        droneDetails.medications.totalWeight = 0;
+      }
+
       droneDetails.save().then((result) => {
         res.status(200).json({
           statusCode: 200,
@@ -147,5 +156,20 @@ export const updateDroneDetails = (req, res, next) => {
     })
     .catch((err) => {
       next(generateErrorMessage(err.message, err.statusCode, err));
+    });
+};
+
+export const updateBatteryLevelLog = () => {
+  Drone.find()
+    .then((droneDetails) => {
+      droneDetails.forEach((drone) => {
+        const batteryLevel = new Battery();
+        batteryLevel.batteryLevel = drone.batteryLevel;
+        batteryLevel.drone = drone._id;
+        return batteryLevel.save();
+      });
+    })
+    .catch((err) => {
+      throw generateErrorMessage(err.message, err.statusCode, err);
     });
 };

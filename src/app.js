@@ -6,9 +6,12 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import multer from "multer";
 import { v4 as uuidv4 } from "uuid";
+import cron from "node-cron";
 
 import droneRoute from "./routes/drone.js";
 import medicationRoute from "./routes/medication.js";
+import loadRoute from "./routes/load.js";
+import { updateBatteryLevelLog } from "./controller/drone.js";
 
 const MONGODB_URI = "mongodb://localhost:27017/droneManagement";
 const __filename = fileURLToPath(import.meta.url);
@@ -49,9 +52,15 @@ app.use(
 // Statically serve images folder
 app.use("/images", express.static(path.join(__dirname, "images")));
 
+// Log battery level every 1 min
+cron.schedule("* *1 * * * *", function () {
+  updateBatteryLevelLog();
+});
+
 //Routes
 app.use("/drone", droneRoute);
 app.use("/medication", medicationRoute);
+app.use("/load", loadRoute);
 
 //Error Handling
 app.use((error, req, res, next) => {
